@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  web:
+    # Define the build context for the Docker image
+    build: .
+    # Set the name for the container
+    container_name: flowerbed_api
+    # Expose the port
+    ports:
+      - "8000:8000"
+    # Load environment variables from a file
+    env_file:
+      - .env
+    # Mount volumes for data persistence
+    volumes:
+      - .:/app
+    # Restart the container if it crashes
+    restart: always

@@ -1,0 +1,23 @@
+# Credentials and Environment Configurations
+.env
+
+# Database Instances
+*.db
+*.sqlite3
+
+# Python Cache and Compilation Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.cache/
+
+# Local Virtual Environments
+venv/
+.venv/
+env/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
