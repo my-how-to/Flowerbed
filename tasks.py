@@ -54,13 +54,13 @@ async def daily_watering_audit(db: Session):
     print(f"Log: Operational audit variables metrics - Temperature: {temp}C, Precipitation: {is_raining}")
 
     if temp > 30 and not is_raining:
+        # Clean, punchy text block with zero fluff or broken links
         message = (
-            "ATTENTION: IRRIGATION PROTOCOL REQUIRED\n\n"
-            "The target workspace reports no active watering validation logs for over 7 days.\n"
-            "Meteorological feeds confirm critical high thermal exposure at " + str(temp) + "C without precipitations.\n\n"
-            "Please deploy field execution and log completion using the interface panel attached below."
+            f"⚠️ *IRRIGATION REQUIRED*\n"
+            f"* **Status:** No watering logs for 7 days.\n"
+            f"* **Weather:** {temp}°C, No precipitation."
         )
+        
+        # Dispatch the message triggering the show_button flag layout
         await send_telegram_alert(message, show_button=True)
-        print("Log: Trigger met. Production warning dispatched to communication channel.")
-    else:
-        print("Log: Active climate profiles do not meet alert execution rules thresholds.")
+        print("Log: Trigger met. Clean warning dispatched to communication channel.")
