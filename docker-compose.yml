@@ -17,3 +17,14 @@ services:
       - .:/app
     # Restart the container if it crashes
     restart: always
+
+  worker:
+      build: .
+      container_name: flowerbed_scheduler_worker
+      # Overwrites the default CMD statement inside Dockerfile to target our scheduler instead
+      command: python scheduler.py
+      env_file:
+        - .env
+      volumes:
+        - .:/app
+      restart: always

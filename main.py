@@ -52,7 +52,7 @@ async def update_well_status(is_open: bool, db: Session = Depends(get_db)):
         db.refresh(status)
     
     status.well_valve_physically_open = is_open
-    status.last_checked = datetime.datetime.utcnow()
+    status.last_checked = datetime.datetime.now(datetime.timezone.utc)
     db.commit()
     
     # Evaluate current state data matrix against infrastructure risk patterns
@@ -83,18 +83,18 @@ def mark_as_watered(user_id: int, db: Session = Depends(get_db)):
     """
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if not user:
-        raise HTTPException(status_code=404, detail="Пользователь не найден в системе")
+        raise HTTPException(status_code=404, detail="User not found. Ensure valid volunteer ID is provided.")
         
     new_record = models.WateringHistory(
         user_id=user_id,
-        watered_at=datetime.datetime.utcnow()
+        watered_at=datetime.datetime.now(datetime.timezone.utc)
     )
     db.add(new_record)
     db.commit()
     
     return {
         "status": "success", 
-        "message": f"Волонтер {user.name} успешно зафиксировал полив клумбы!",
+        "message": f"Volunteer {user.name} successfully logged watering event!",
         "date": new_record.watered_at
     }
 
